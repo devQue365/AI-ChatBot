@@ -7,10 +7,11 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import sys
 import re
+import SpeakOffline as SOF
 # Function to perform a Google search and extract links
 def make_google_search(query, max_results=5):
     options = webdriver.ChromeOptions()
-    # options.add_argument("--headless=new")  # Improved headless mode
+    # options.add_argument("--headless")  # Improved headless mode
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920x1080")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -20,7 +21,7 @@ def make_google_search(query, max_results=5):
     query = query.replace('+'," plus ").replace('-'," minus ")
     search_url = f"https://www.google.com/search?q={query.replace(' ', '+')}"
     driver.get(search_url)
-
+    SOF.Speak(f"Searching internet for {query}")
     time.sleep(3)  # Gives time for search results to load
     # XML Path for complexing matching
     results = driver.find_elements(By.XPATH, "//div[@class='tF2Cxc']//a")
@@ -47,7 +48,7 @@ def extract_contents(url):
 
     driver = webdriver.Chrome(options=options)
     driver.get(url)
-
+    SOF.Speak("Looking for the best content ...")
     try:
         # Wait until the page body loads
         WebDriverWait(driver, 10).until(
@@ -68,7 +69,8 @@ def extract_contents(url):
             content = "Nothing to show ..."
         # get domain name
         domain = extract_domain(url)
-        print(f"\nTelling results from site {domain}\n{content[:500]}...Do you want me to tell more ?\n")
+        SOF.Speak(f"\nTelling results from {domain}\n{content[:500]}\nDo you want me to tell more ?\n")
+        # print(f"\nTelling results from site {domain}\n{content[:500]}...Do you want me to tell more ?\n")
         sys.exit(0)
         # print(f"\n[{url}] :\n{content[:500]}...\n")
         # return content
