@@ -69,9 +69,4 @@ def extract_contents(url):
     finally:
         driver.quit()
 
-# Testing Area
-query = input('Enter search query: ')
-urls = make_google_search(query)
 
-for url in urls:
-    extract_contents(url)
