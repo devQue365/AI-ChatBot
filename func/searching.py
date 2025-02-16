@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import sys
+import re
 # Function to perform a Google search and extract links
 def make_google_search(query, max_results=5):
     options = webdriver.ChromeOptions()
@@ -28,10 +29,18 @@ def make_google_search(query, max_results=5):
     driver.quit()
     return links
 
+def extract_domain(url):
+    pattern = r"(https?://)?(www\d?\.)?(?P<domain>[\w\.-]+\.\w+)(?:/\S*)?"
+    match = re.match(pattern, url)
+    if match:
+        domain = match.group("domain")
+        return domain
+    return None
+
 # Extract content from URL
 def extract_contents(url):
     options = webdriver.ChromeOptions()
-    options.add_argument("--headless=new")  # Improved headless mode
+    # options.add_argument("--headless=new")  # Improved headless mode
     options.add_argument("--disable-gpu")
     options.add_argument("--window-size=1920x1080")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -50,15 +59,16 @@ def extract_contents(url):
         extracted_paragraphs = driver.find_elements(By.TAG_NAME, 'p')
         content = '\n'.join([p.text for p in extracted_paragraphs if p.text.strip()])
 
-        # Alternative: Try to extract from common article containers
+        # Alternatively: Try to extract from common article containers
         if not content:
             extracted_divs = driver.find_elements(By.XPATH, "//div[contains(@class, 'article') or contains(@class, 'content')]")
             content = "\n".join([div.text for div in extracted_divs if div.text.strip()])
 
         if not content:
             content = "Nothing to show ..."
-
-        print(f"\nTelling results from site {url}\n{content[:500]}...Do you want me to tell more ?\n")
+        # get domain name
+        domain = extract_domain(url)
+        print(f"\nTelling results from site {domain}\n{content[:500]}...Do you want me to tell more ?\n")
         sys.exit(0)
         # print(f"\n[{url}] :\n{content[:500]}...\n")
         # return content
