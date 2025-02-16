@@ -31,4 +31,5 @@ def Speak(*args):
         # clear the voicetext area
         driver.find_element(By.ID, value = "voicetext").clear()
 
-Speak('a',1,2.34,5)
+query = input('Enter anything : ')
+Speak(query)
