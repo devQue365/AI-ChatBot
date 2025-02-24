@@ -68,10 +68,10 @@ def search_google(query, max_results=2):
         except:
             pass
     driver.quit()
-while(True):
-    result = search_google(input('Enter your query : '))
-    # Print the result to verify it works
-    if(result):
-        print(f'The result we got:\n{result}')
-    else:
-        print("\033[1m\033[31mSorry, I ran into problem :(\033[0m")
+# while(True):
+#     result = search_google(input('Enter your query : '))
+#     # Print the result to verify it works
+#     if(result):
+#         print(f'The result we got:\n{result}')
+#     else:
+#         print("\033[1m\033[31mSorry, I ran into problem :(\033[0m")
