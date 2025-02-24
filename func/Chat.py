@@ -6,7 +6,7 @@ import numpy as np
 import nltk
 from nltk.stem.porter import PorterStemmer
 stemmer = PorterStemmer()
-nltk.download("punkt")
+# nltk.download("punkt")
 
 class NeuralNet(nn.Module):
     def __init__(self, input_size, hidden_size, num_classes):
