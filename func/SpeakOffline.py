@@ -12,7 +12,7 @@ def Speak(*args, **kwargs):
     audio = ""
     for i in args: # tuple
         audio += (str(i) + ' ')
-    print(f'\nRete(X) : [\'{audio}\b\']\n')
+    # print(f'\nRete(X) : [\'{audio}\b\']\n')
     engine.say(audio)
     engine.runAndWait()
 # if __name__ == '__main__':

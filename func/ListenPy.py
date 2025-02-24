@@ -3,7 +3,7 @@ import speech_recognition as sr
 #Initialize reecognizer
 recognizer = sr.Recognizer()
 recognizer.pause_threshold = 0.5
-def Listen():
+def Listen() ->str|None:
     # using default microphone as the source
     with sr.Microphone() as source: # implicit closing
         print("Listening ...")
@@ -27,6 +27,6 @@ def Listen():
             # if in case the internet connection breaks
             print(f"Error : {e}")
             return None
-if __name__ == '__main__':
-    recogninez_text = Listen()
+# if __name__ == '__main__':
+#     recogninez_text = Listen()
     
