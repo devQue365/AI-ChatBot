@@ -21,7 +21,7 @@ def genEffect(*args)->str|None:
     text = '\n'.join(args)
     for i in text:
         print(i, end='')
-        sleep(0.05)
+        sleep(0.025)
     print()
 
 def initialize_driver():
@@ -94,12 +94,12 @@ def search_google(query, max_results=2):
             if extracted_text:
                 print(f"Found at \033[32m{class_name}\033[0m")  # Debugging
                 result = extracted_text  # Store the result but do not break
-                driver.service.stop()
+                driver.quit()
                 return result
         except Exception as e:
             print(f"Error finding class {class_name}: {e}")
     ''' Search websites for results '''
-    genEffect("\033[34mSearching websites for the best results ...\033[0m")
+    genEffect("\033[34m\033[1mSearching websites for the best results ...\033[0m")
     results = driver.find_elements(By.XPATH, "//div[@class='tF2Cxc']//a")
     links = [result.get_attribute("href") for result in results[:max_results]]
     for url in links:
@@ -110,7 +110,8 @@ def search_google(query, max_results=2):
                 # expected Conditions to check for dynamically loaded contents
                 EC.presence_of_element_located((By.TAG_NAME, "body"))
             )
-
+            domain = extract_domain(url)
+            result = f"{domain} says\n"
             # Extract paragraph text
             extracted_paragraphs = driver.find_elements(By.TAG_NAME, 'p')
             content = '\n'.join([p.text for p in extracted_paragraphs if p.text.strip()])
@@ -123,20 +124,22 @@ def search_google(query, max_results=2):
             if not content:
                 content = "Nothing to show ..."
             # get domain name
-            domain = extract_domain(url)
-            genEffect(f"\033[34m\n{domain} says\n")#{content[:500]}\n\n\033[0m")
+            # domain = extract_domain(url)
+            # genEffect(f"\033[34m\n{domain} says\n")#{content[:500]}\n\n\033[0m")
             # SOF.Speak(f"\n{domain} says\n{content[:500]}\n\n")
             # print(f"\nTelling results from site {domain}\n{content[:500]}...Do you want me to tell more ?\n")
             # sys.exit(0)
             # print(f"\n[{url}] :\n{content[:500]}...\n")
             # return content
-            driver.service.stop()
-            return content
+            result += content
+            driver.quit()
+            return result
 
         except Exception as e:
             content = f'\033[31mCould not extract content from {url}\nError: {e}\033[0m'
-            driver.service.stop()
-            return content
+            result += content
+            driver.quit()
+            return result
 # while(True):
 #     result = search_google(input('Enter your query : '))
 #     # Print the result to verify it works
