@@ -17,12 +17,15 @@ new_classes = set(["vk_gy vk_sh card-section sL6Rbf","rPeykc","Yh5dPc","VQF4g","
 ])
 classes = classes.union(new_classes)
 
-def genEffect(*args)->str|None:
-    text = '\n'.join(args)
-    for i in text:
-        print(i, end='')
-        sleep(0.025)
+def genEffect(arg)->str|None:
+    arg = str(arg).split(' ')
+    for i in arg:
+        print(i,end=" ")
+        sleep(0.07)
     print()
+
+
+
 
 def initialize_driver():
     # Initialize the Chrome options
@@ -147,3 +150,4 @@ def search_google(query, max_results=2):
 #         genEffect(f'The result we got:\n{result}')
 #     else:
 #         genEffect("\033[1m\033[31mSorry, I ran into problem :(\033[0m")
+# genEffect("Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti, consequuntur similique. Rem beatae aliquid, eum praesentium soluta labore impedit! Asperiores perspiciatis eaque, excepturi deleniti corporis repudiandae expedita impedit dolorum cupiditate.")
