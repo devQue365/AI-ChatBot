@@ -5,7 +5,7 @@ engine = tts.init('sapi5')
 voices = engine.getProperty('voices')
 
 engine.setProperty('voice',voices[0].id)
-engine.setProperty('rate',175)
+engine.setProperty('rate',180)
 
 def Speak(*args, **kwargs):
     # kwargs to be used in future
@@ -15,6 +15,6 @@ def Speak(*args, **kwargs):
     print(f'\nRete(X) : [\'{audio}\b\']\n')
     engine.say(audio)
     engine.runAndWait()
-if __name__ == '__main__':
-    query = input('Enter anything : ')
-    Speak(query)
+# if __name__ == '__main__':
+#     query = input('Enter anything : ')
+#     Speak(query)
