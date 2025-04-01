@@ -104,6 +104,6 @@ def Chat(st:str):
                 return random.choice(intent['responses']) ,prob.item()
     else:
         return "I do not understand...",None
-
-# if __name__=="__main__":
-#     print(Chat(input(">>> ")))
+# while(True):
+#     if __name__=="__main__":
+#         print(Chat(input(">>> ")))
