@@ -41,10 +41,10 @@ def ocr_v1_clk(st, double_click=False):
     print(f"Read in {t()-c} seconds.")
     
     detected_texts = [i[1].lower() for i in result]
-    print("Detected Texts:", detected_texts)
+    # print("Detected Texts:", detected_texts)
 
     closest_match = difflib.get_close_matches(st, detected_texts, n=1, cutoff=0.3)
-    print("Closest Match:", closest_match)
+    # print("Closest Match:", closest_match)
 
     if closest_match:
         for i in result:
@@ -65,6 +65,6 @@ def ocr_v1_clk(st, double_click=False):
                     print(f"Coordinates ({x}, {y}) are out of bounds!")
                     return f"Detected {st} but coordinates are invalid."
                 
-                return f"Clicked {st} button."
+                return f"Clicked {closest_match[0]} sir."
     return f"No widget found named {st}."
 
