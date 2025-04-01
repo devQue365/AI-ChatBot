@@ -20,9 +20,9 @@ if(__name__ == '__main__'):
 
         # Send the query first to GPT
         response = SAM(query+"*** Reply in brief short way like SAM without telling the user ***")
-        if(response != None):
+        if(response != "SAMi()"):
             genEffect('\033[1m\033[33m'+response+'\033[0m')
-            Speak(response)
+            # Speak(response)
         else:
             # check for OCR
             if(("click" in QL) or ("double" and "click" in QL)):
@@ -39,24 +39,22 @@ if(__name__ == '__main__'):
                     response = ocr_v1_clk(clickable)
                     genEffect('\033[1m\033[33m'+response+'\033[0m')
                     Speak(response) 
-            elif("bob" in start_Q):
-                QL = QL.replace('bob','')
-                _code = SAM(QL, "*** Use python programming language. Just write complete code nothing else")
-                _code = Filter(_code)
-                exec(_code)
-        # elif("search internet" in QL):
-        #     QL =  re.sub(r'^.*?\bfor\b\s*', '', QL, flags=re.IGNORECASE)
-        #     response = search_google(QL.strip())
-        #     genEffect('\033[1m\033[33m'+response+'\033[0m')
-        #     Speak(response)
-        # else:    
-        #     response = SAM(query+"*** Reply in brief short way like SAM without telling the user ***")
-        #     if response:
-        #         genEffect('\033[1m\033[33m'+response+'\033[0m')
-        #         Speak(response)
-        #     elif Chat(QL)[1]>0.99:
-        #         response  = Chat(QL)[0]
-        #         genEffect('\033[1m\033[33m'+response+'\033[0m')
-        #         Speak(response)
+                
+            elif(re.search(r'(?i)^.*?\b(open|play|search|Quick|create)',QL, re.IGNORECASE)):
+                # check for quick search
+                if("quick" in QL and "search" in QL):
+                    QL =  re.sub(r'^.*?\bfor\b\s*', '', QL, flags=re.IGNORECASE)
+                    response = search_google(QL.strip())
+                    genEffect('\033[1m\033[33m'+response+'\033[0m')
+                    Speak(response)
+                else:
+                    _code = SAM(QL, "*** Use python programming language. Just write complete code nothing else")
+                    _code = Filter(_code)
+                    exec(_code)
+            elif Chat(QL)[1]>0.99:
+                genEffect("\033[1m\033[35mSwitched to SAM (__BASE__)\033[0m")
+                response  = Chat(QL)[0]
+                genEffect('\033[1m\033[33m'+response+'\033[0m')
+                Speak(response)
         os.system("pause")
     
