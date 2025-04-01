@@ -65,7 +65,7 @@ def search_google(query, max_results=2):
             return False
     # check for internet connection
     if not check_connection('https://www.google.com'):
-        return "Please check your internet connection ..."
+        return "\033[31mPlease check your internet connection ...\033[0m"
     driver = initialize_driver()
 
     # sanitize the query
@@ -95,12 +95,12 @@ def search_google(query, max_results=2):
             extracted_text = element.text.strip()
 
             if extracted_text:
-                print(f"Found at \033[32m{class_name}\033[0m")  # Debugging
+                # print(f"Found at \033[32m{class_name}\033[0m")  # Debugging
                 result = extracted_text  # Store the result but do not break
                 driver.quit()
                 return result
         except Exception as e:
-            print(f"Error finding class {class_name}: {e}")
+            print(f"\033[31mError finding class {class_name}: {e}\033[0m")
     ''' Search websites for results '''
     genEffect("\033[34m\033[1mSearching websites for the best results ...\033[0m")
     results = driver.find_elements(By.XPATH, "//div[@class='tF2Cxc']//a")
@@ -136,7 +136,7 @@ def search_google(query, max_results=2):
             # return content
             result += content
             driver.quit()
-            return result
+            return f'{result:500}'
 
         except Exception as e:
             content = f'\033[31mCould not extract content from {url}\nError: {e}\033[0m'
