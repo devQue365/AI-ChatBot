@@ -6,3 +6,4 @@
 - Install the dependencies
     - ```pip install -r requirements.txt```
 
+- USED : ```pip freeze > requirements.txt```
