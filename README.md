@@ -1,4 +1,4 @@
-# projX
+# SAM
 ## Quick CheatSheet
 - Create a virtual envvironment 
     - ```python3 -m venv venv```
