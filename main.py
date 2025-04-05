@@ -1,3 +1,4 @@
+import threading # Backbone of this project
 from func.Chat import Chat
 from LLM.SAMgpt import SAM, Filter
 # from func.DataOnline import search_google
@@ -9,6 +10,15 @@ from func.ocr import ocr_v1_clk # Variant-1
 import os
 import re
 os.system("pip install -U g4f") # install this ...
+
+def execute_request(QL):
+    _code = SAM(QL, "*** Use python programming language. Just write complete code nothing else")
+    _code = Filter(_code)
+    try:
+        exec(_code)
+    except Exception as e:
+        genEffect(f'\033[1m\033[33mError while handling your request ....\n{e}\033[0m')
+
 if(__name__ == '__main__'):
     while(True):
         query = Listen()
@@ -40,7 +50,8 @@ if(__name__ == '__main__'):
                     genEffect('\033[1m\033[33m'+response+'\033[0m')
                     Speak(response) 
                 
-            elif(re.search(r'(?i)^.*?\b(open|play|search|Quick|create)',QL, re.IGNORECASE)):
+            # elif(re.search(r'(?i)^.*?\b(open|play|search|quick|create)',QL, re.IGNORECASE)):
+            else:
                 # check for quick search
                 if("quick" in QL and "search" in QL):
                     QL =  re.sub(r'^.*?\bfor\b\s*', '', QL, flags=re.IGNORECASE)
@@ -48,13 +59,13 @@ if(__name__ == '__main__'):
                     genEffect('\033[1m\033[33m'+response+'\033[0m')
                     Speak(response)
                 else:
-                    _code = SAM(QL, "*** Use python programming language. Just write complete code nothing else")
-                    _code = Filter(_code)
-                    exec(_code)
-            elif Chat(QL)[1]>0.99:
-                genEffect("\033[1m\033[35mSwitched to SAM (__BASE__)\033[0m")
-                response  = Chat(QL)[0]
-                genEffect('\033[1m\033[33m'+response+'\033[0m')
+                    # create a thread for this task
+                    threading.Thread(target = execute_request, args = (QL,), daemon=True).start()
+                    genEffect("I am performing tasks in the background, you can continue to add next input friend ...")
+            # elif Chat(QL)[1]>0.99:
+            #     genEffect("\033[1m\033[35mSwitched to SAM (__BASE__)\033[0m")
+            #     response  = Chat(QL)[0]
+            #     genEffect('\033[1m\033[33m'+response+'\033[0m')
                 Speak(response)
-        os.system("pause")
+
     
