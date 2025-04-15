@@ -1,5 +1,5 @@
 import threading # Backbone of this project
-from func.Chat import Chat
+# from func.Chat import Chat
 from LLM.SAMgpt import SAM, Filter
 # from func.DataOnline import search_google
 from func.enhanced_search import genEffect
