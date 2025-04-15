@@ -5,6 +5,14 @@
     - ```source venv/bin/activate```
 - Install the dependencies
     - ```pip install -r requirements.txt```
+- For functionalities
+    - ```pip install undetected_chromedriver```
+    - ```pip install SpeechRecognition```
+    - ```pip install easyocr```
+    - ```pip install pyautogui```
+    - ```pip install opencv-python```
+    - ```pip install nltk```
+    - ```pip install numpy```
 - Additional installations
     - ```pip install torch```
     - ```pip install nltk```
