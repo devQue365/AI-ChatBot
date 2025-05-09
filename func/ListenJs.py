@@ -11,7 +11,7 @@ options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 
 driver = uc.Chrome(options=options)
-url = r"C:\Users\Hp\Desktop\Projects\projX\projX\data\voice.html"
+url = r"C:\Users\Hp\Desktop\Projects\SAM\AI-ChatBot\func\voice.html"
 
 # get the url
 # driver.get(url)
@@ -33,4 +33,3 @@ def Listen():
 
 # while True:
 #     Listen()
-
